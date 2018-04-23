@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{#    <link rel="stylesheet" href="{{asset('css/jquery-te')}}" type="text/css"/>#}
+{#  TODO: Convert all this to Less  #}
+    <style>
+        #topDivider{
+         background-color:green;
+         color:white;
+        }
+        .content{
+            width:75%;
+            display:inline-block;
+        }
+        .sideBar{
+            float:left;
+            width:25%;
+            display:inline-grid;
+        }
+        .sidebar_section h3{
+            text-align: center;
+        }
+        .sidebar_section{
+            float:left;
+            margin-right:5%;
+            background-color:lightgray;
+            border:1px solid grey;
+            padding-top:10px;
+            
+        }
+        .sidebar_section li a{
+             text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            color:black;
+            text-align: center;
+        }
+        .sidebar_section ul{
+            padding-left:0;
+        }
+        .sidebar_section li a:hover{
+            color:black;
+            background-color:darkgrey;
+            width:100%;
+            text-align:center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            color:black;
+        }
+        .sidebar_section ul{
+            list-style-type: none;
+            
+        }
+        .ticket-rbar{
+          float:right;
+          background-color: grey;
+          border: 1px solid black;
+          
+        }
+       
+    </style>
+{% endblock %}
+{% block body %}
+    <div id="topDivider">
+        <h2>Welcome {{app.user.firstName}}</h2>
+        </div>
+    <div class="sideBar">
+         
+        <aside class="sidebar_section">
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i>&nbsp;</i>Home</a></li>
+                <li><a href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
+                {% if app.user.isAdmin %}
+                <li><a href="#">Admin</a></li>
+                {% endif %}
+            </ul>
+        </aside>
+        <aside class="sidebar_section">
+            <h3>Global Views</h3>
+            <ul>
+                <li><a id="UnassignedTicketButton" href="#"><i class="fas fa-home"></i>&nbsp;</i>Unassigned Tickets</a></li>
+            </ul>
+        </aside>
+         <aside class="sidebar_section">
+            <h3>Personal Views</h3>
+            <ul>
+                <li><a href="#"><i class="fas fa-ticket-alt"></i>&nbsp;</i>My Tickets</a></li>
+            </ul>
+        </aside>
+    </div>
+    <div class="content">
+        <div id="UnassignedTickets">
+            <h3>Unassigned Tickets</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                <th scope="col">Ticket Id</th>
+                <th scope="col">Requester</th>
+                <th scope="col">Submitted On</th>
+                <th scope="col">Status</th>
+                </thead>
+                <tbody>
+                 {% for ticket in UTickets %}
+                     <tr>
+                        <td>{{ticket.id}}</td>
+                        <td>
+                           {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+                        </td>
+                        <td>{{ticket.created_on|date('d-m-Y')}}</td>
+                        <td>{{ticket.status}}</td>
+                        <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+                     </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        <div id="ticketInfo"></div>
+        {#<form>
+            <label for="assignee">Assignee</label>
+            <select id="assignee" name="assignee">
+                <option value="">Please Select</option>
+                {% for user in assigneeList %}
+                    <option value="{{user.id}}">{{user.firstName}} {{user.lastName}}</option>
+                {% endfor %}
+            </select>
+        </form>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{#    <script src="{{ asset('js/jquery-te-1.4.0.js')}}" type="text/css"></script>#}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#ticketInfo').hide();
+            $('#UnassignedTicketButton').click(function(e){
+               e.preventDefault();
+               $('#ticketInfo').hide();
+               $('#UnassignedTickets').show();
+            });
+            $('.viewticket').click(function(e){
+                e.preventDefault();
+                console.log("ViewTicket Clicked");
+                console.log("Ticket ID: " + $(this).data('ticketid'));
+                jQuery.ajax({
+                type:"POST",
+                url:'{{ (path('fetchticket')) }}',
+                dataType: "json",
+                data: {
+                    "id": $(this).data('ticketid')
+                },
+                success: function(data){
+                  template = data;
+                  console.log(template.html);
+                  $('#UnassignedTickets').hide();
+                  $('div#ticketInfo').html(template);
+                  $('#ticketInfo').show();
+                  
+                }
+                });
+                
+                
+            });
+        });
+        
+    </script>
+{% endblock %}

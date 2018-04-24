@@ -1,5 +1,14 @@
 <div id="ticketContainer">
+    <span class="tdetails col-8">
     <h2>#{{id}} - {{title}}</h2>
     <p>{{description}}</p>
-    
+{#  This will eventually become the response box  #}
+    <form>
+    <textarea class="fulleditor col-4"></textarea>
+    </form>
+    </span>
+<span class="ticket-rbar col-4">
+    <strong>Status: {{status}}</strong>
+    <strong>Priority: {{priority}}</strong>
+</span>
 </div>

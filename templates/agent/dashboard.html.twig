@@ -58,16 +58,11 @@
             </table>
             
         </div>
-        <div id="ticketInfo" class="col-12"></div>
-        {#<form>
-            <label for="assignee">Assignee</label>
-            <select id="assignee" name="assignee">
-                <option value="">Please Select</option>
-                {% for user in assigneeList %}
-                    <option value="{{user.id}}">{{user.firstName}} {{user.lastName}}</option>
-                {% endfor %}
-            </select>
-        </form>#}
+                
+                    <div id="ticketInfo" class="col-12">
+                        {%block ticket %}{% endblock %}
+                    </div>
+        
         </div>
     </div>
 {% endblock %}

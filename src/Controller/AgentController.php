@@ -14,7 +14,7 @@ class AgentController extends Controller{
     /**
      *@Route("/agent/dashboard", name="agentDashboard")
      */
-    public function Agent_Dashboard(LoggerInterface $logger)
+    public function Agent_Dashboard()
     {
        $repository = $this->getDoctrine()->getRepository(User::class);
         //ToDO: Assignee List
@@ -39,28 +39,7 @@ class AgentController extends Controller{
         $logger->info("Passed ID is".$tid);
         $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
         $ticket = $ticketrepository->findOneBy(array('id' => $tid));
-//        TODO: Covert this JSON Array to a updateable form/twig file
-//        
-//        
-//        $arrData = ['output' => ''
-//            . '<span class="ticketDetails">'
-//            . ' <h2 class="idbox">'.$ticket->getid().'</h2>'
-//           . ' <br/>'
-//            . ' <h2>'.$ticket->getTitle().'</h2>'
-//            . ' <p>'.$ticket->getDescription().'</p>'
-//            . '</span>'
-//           . '<span class="ticket-rbar">
-//                <table>
-//                <tr>
-//               <td>Status</td>
-//               <td>'.$ticket->getStatus().'</td>
-//                </tr>
-//                <tr>
-//               <td>'.$ticket->getPriority().'</td>
-//                </tr>
-//             </span>'  
-//           ];
-        
+//        TODO: Pass Assignee Array
        
        $response = $this->renderView('agent/ticketview.html.twig', array(
                'id' => $ticket->getId(),

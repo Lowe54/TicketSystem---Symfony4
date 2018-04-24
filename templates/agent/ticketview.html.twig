@@ -1,16 +1,14 @@
 {% block ticket %}
 <div id="ticketContainer">
+    <form>
     <span class="tdetails col-8">
     <h2>#{{id}} - {{title}}</h2>
     <p>{{description}}</p>
-    <form>
-     
-    <textarea class="fulleditor col-4"></textarea>
-    
+     <textarea class="fulleditor col-4"></textarea>
     </span>
     <span class="ticket-rbar col-4">
-    <label for="assignee">Assignee</label>
-        <select id="assignee" name="assignee">
+        <label for="assignee"><strong>Assignee</strong></label>
+        <select id="assignee" name="assignee" class="form-control">
             <option value="">Please Select</option>
             {% for user in assigneeList %}
                 <option value="{{user.id}}">{{user.firstName}} {{user.lastName}}</option>

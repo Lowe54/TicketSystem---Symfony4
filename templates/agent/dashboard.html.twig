@@ -2,15 +2,13 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{asset('assets/css/jquery-te-1.4.0.css')}}" type="text/css"/>
     <link rel="stylesheet" href="{{ asset('build/agentstyle.css') }}" type="text/css"/>
-
 {% endblock %}
 {% block body %}
     <div id="topDivider">
         <h2>Welcome {{app.user.firstName}}</h2>
         </div>
     <div class="sideBar col-4">
-         
-        <aside class="sidebar_section">
+       <aside class="sidebar_section">
             <ul>
                 <li><a href="#"><i class="fas fa-home"></i>&nbsp;</i>Home</a></li>
                 <li><a href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
@@ -56,19 +54,11 @@
                  {% endfor %}
                 </tbody>
             </table>
-            
         </div>
-        <div id="ticketInfo" class="col-12"></div>
-        {#<form>
-            <label for="assignee">Assignee</label>
-            <select id="assignee" name="assignee">
-                <option value="">Please Select</option>
-                {% for user in assigneeList %}
-                    <option value="{{user.id}}">{{user.firstName}} {{user.lastName}}</option>
-                {% endfor %}
-            </select>
-        </form>#}
+        <div id="ticketInfo" class="col-12">
+            {%block ticket %}{% endblock %}
         </div>
+       </div>
     </div>
 {% endblock %}
 
@@ -84,8 +74,6 @@
             });
             $('.viewticket').click(function(e){
                 e.preventDefault();
-                console.log("ViewTicket Clicked");
-                console.log("Ticket ID: " + $(this).data('ticketid'));
                 jQuery.ajax({
                 type:"POST",
                 url:'{{ (path('fetchticket')) }}',
@@ -95,18 +83,13 @@
                 },
                 success: function(data){
                   template = data;
-                  console.log(template.html);
                   $('#UnassignedTickets').hide();
                   $('div#ticketInfo').html(template);
                   $('#ticketInfo').show();
                   $('.fulleditor').jqte();
-                  
-                }
+                  }
                 });
-                
-                
             });
         });
-        
     </script>
 {% endblock %}

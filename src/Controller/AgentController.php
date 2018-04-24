@@ -4,7 +4,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\User;
 use App\Entity\Ticket;
@@ -41,18 +40,13 @@ class AgentController extends Controller{
         $assignees = $repository->findBy(['isAgent' => 1]);
         $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
         $ticket = $ticketrepository->findOneBy(array('id' => $tid));
-//        TODO: Pass Assignee Array
-       
-       $response = $this->renderView('agent/ticketview.html.twig', array(
+        $response = $this->renderView('agent/ticketview.html.twig', array(
                'id' => $ticket->getId(),
                'title' => $ticket->getTitle(),
                'description' => $ticket->getDescription(),
                'status' => $ticket->getStatus(),
                'priority'=> $ticket->getPriority(),
                'assigneeList' => $assignees
-//               'assigneeid' => $assignees->getId(),
-//               'assigneefname' => $assignees->getFirstName(),
-//               'assigneelname' => $assignees->getLastName()
                ));
        $res = new Response(json_encode($response));
        $res->headers->set('Content-Type', 'application/json');

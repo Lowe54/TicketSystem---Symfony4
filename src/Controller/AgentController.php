@@ -62,10 +62,12 @@ class AgentController extends Controller{
 //           ];
         
        
-       $response = $this->renderView('agent/ticketview.html.twig', array('id' => $ticket->getId(),'title' => $ticket->getTitle(),
-               'description' => $ticket->getDescription()
-               
-               
+       $response = $this->renderView('agent/ticketview.html.twig', array(
+               'id' => $ticket->getId(),
+               'title' => $ticket->getTitle(),
+               'description' => $ticket->getDescription(),
+               'status' => $ticket->getStatus(),
+               'priority'=> $ticket->getPriority()              
                ));
        $res = new Response(json_encode($response));
        $res->headers->set('Content-Type', 'application/json');

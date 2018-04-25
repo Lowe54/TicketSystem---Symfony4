@@ -1,22 +1,45 @@
 {% block ticket %}
 <div id="ticketContainer">
-    <form>
+    <form id="ticketform">
     <span class="tdetails col-8">
-    <h2>#{{id}} - {{title}}</h2>
+        <p>{{id}}</p>
+    <input id="data_id" type="hidden" value="{{id}}" name="data_id"/>
+    <input type="text" class="form-control" value="{{title}}" name="title" id="data_title"/>
     <p>{{description}}</p>
      <textarea class="fulleditor col-4"></textarea>
     </span>
     <span class="ticket-rbar col-4">
-        <label for="assignee"><strong>Assignee</strong></label>
-        <select id="assignee" name="assignee" class="form-control">
+        <label for="data_requester"><strong>Submitted by</strong></label>
+        <select id="data_requester" name="data_requester" class="form-control">
+            
+            <option value="">Please Select</option>
+            {% for req in requester %}
+                {% set selected = '' %}
+                {% if (req.id == requesterId.id) %}
+                {% set selected = 'selected' %}
+                {% endif %}
+                <option value="{{req.id}}" {{ selected }}>{{req.firstName}} {{req.lastName}}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="data_assignee"><strong>Assignee</strong></label>
+        <select id="data_assignee" name="data_assignee" class="form-control">
             <option value="">Please Select</option>
             {% for user in assigneeList %}
-                <option value="{{user.id}}">{{user.firstName}} {{user.lastName}}</option>
+                {% set selected = '' %}
+                {% if assigneeId.id is defined %}
+                    {%if (user.id == assigneeId.id) %}
+                    {% set selected = 'selected' %}
+                    {% endif %}
+                {% endif %}
+                <option value="{{user.id}}" {{selected}}>{{user.firstName}} {{user.lastName}}</option>
             {% endfor %}
         </select>
     <strong>Status: {{status}}</strong>
     <strong>Priority: {{priority}}</strong>
     </span>
+    
+    <button type="button" data-ticketid="{{id}}" id="ticketUpdate" value="Update Ticket" class="btn btn-primary">Update Ticket</button>
     </form>
 </div>
 {% endblock %}

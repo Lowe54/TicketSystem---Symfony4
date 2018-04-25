@@ -90,6 +90,27 @@
                   }
                 });
             });
+            
+            //Update Ticket
+            $(document).on('click','.updateTicket', function(e){
+                e.preventDefault();
+                console.log("Form Submitted");
+                console.log($(this).data('ticketid'));
+                jQuery.ajax({
+                   type:"POST",
+                   url:'{{ (path('updateticket')) }}',
+                   datatype: "json",
+                   data: {
+                      'id': $(this).data('ticketid'),
+                      'title': $('#data_title').val(),
+                      'assignee': $('#data_assignee').val(),
+                      'requester': $('#data_requester').val()
+                    },
+                    success: function(){
+                      $('.tdetails').prepend('<h2 class="alert alert-dismissable alert-success>Ticket Updated</h2>');  
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}

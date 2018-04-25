@@ -85,7 +85,7 @@ class Ticket {
         return $this->assignee;
     }
     
-     public function getRequester(): User
+    public function getRequester()
     {
         return $this->requester;
     }
@@ -112,5 +112,18 @@ class Ticket {
     {
         $this->assignee = $assigneeid;
     }
+    public function setRequester($requesterid)
+    {
+        $this->requester = $requesterid;
+    }
+    public function setUpdatedDate($updatedate)
+    {
+        $this->updatedOn = $updatedate;
+    }
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+    
 }
 

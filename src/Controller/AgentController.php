@@ -15,16 +15,18 @@ class AgentController extends Controller{
      */
     public function Agent_Dashboard()
     {
+       $usr = $this->getUser();
        $repository = $this->getDoctrine()->getRepository(User::class);
        $assignees = $repository->findAll();
-        
+        $id=$usr->getId();
         
         //TODO: Ticket List(s);
        $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
+       $Assigned = $ticketrepository->getAssignedTickets($id);
        $Unassigned = $ticketrepository->getUnassignedTickets();
       dump($Unassigned);
 
-        return $this->render('agent/dashboard.html.twig', array('assigneeList'=> $assignees, 'UTickets' => $Unassigned));
+        return $this->render('agent/dashboard.html.twig', array('assigneeList'=> $assignees, 'UTickets' => $Unassigned, 'ATickets' => $Assigned));
     }
     
     /**
@@ -76,6 +78,8 @@ class AgentController extends Controller{
        $entityManager = $this->getDoctrine()->getManager();
        
        $ticket = $entityManager->getRepository(Ticket::class)->findOneBy(array('id' => $tid));
+       $newassignee = $entityManager->getRepository(User::class)->findOneBy(array('id' => $assignee));
+       $newreq = $entityManager->getRepository(User::class)->findOneBy(array('id' => $requester));
 
     if (!$ticket) {
         throw $this->createNotFoundException(
@@ -83,12 +87,14 @@ class AgentController extends Controller{
         );
     }
 
-    $ticket->setName($title);
-    $ticket->setAssignee($assignee);
-    $ticket->setRequester($requester);
+    $ticket->setTitle($title);
+    $ticket->setAssignee($newassignee);
+    $ticket->setRequester($newreq);
     $entityManager->flush();
-
-        return "Success";
+        $data = '<h2 class="alert alert-success alert-dismissible">Ticket has been updated</h2>';
+        $res = new Response(json_encode($data));
+       $res->headers->set('Content-Type', 'application/json');
+        return new Response($res);
 
     }
 }

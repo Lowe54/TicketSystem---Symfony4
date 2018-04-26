@@ -26,11 +26,36 @@
          <aside class="sidebar_section">
             <h3>Personal Views</h3>
             <ul>
-                <li><a href="#"><i class="fas fa-ticket-alt"></i>&nbsp;</i>My Tickets</a></li>
+                <li><a id="myticketbutton" href="#"><i class="fas fa-ticket-alt"></i>&nbsp;</i>My Tickets</a></li>
             </ul>
         </aside>
     </div>
     <div class="content col-8">
+{#    Assigned Tickets    #}
+        <div id="assignedTickets">
+            <h3>Assigned Tickets</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                <th scope="col">Ticket Id</th>
+                <th scope="col">Requester</th>
+                <th scope="col">Submitted On</th>
+                <th scope="col">Status</th>
+                </thead>
+                <tbody>
+                 {% for ticket in ATickets %}
+                     <tr>
+                        <td>{{ticket.id}}</td>
+                        <td>
+                           {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+                        </td>
+                        <td>{{ticket.created_on|date('d-m-Y')}}</td>
+                        <td>{{ticket.status}}</td>
+                        <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+                     </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div id="UnassignedTickets">
             <h3>Unassigned Tickets</h3>
             <table class="table">
@@ -56,6 +81,7 @@
             </table>
         </div>
         <div id="ticketInfo" class="col-12">
+            
             {%block ticket %}{% endblock %}
         </div>
        </div>
@@ -67,9 +93,13 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#ticketInfo').hide();
+            $('#ticketupdate').hide();
+            $('#assignedTickets').hide();
             $('#UnassignedTicketButton').click(function(e){
                e.preventDefault();
                $('#ticketInfo').hide();
+               $('#ticketupdate').hide();
+               $('#assignedTickets').hide();
                $('#UnassignedTickets').show();
             });
             $('.viewticket').click(function(e){
@@ -84,18 +114,14 @@
                 success: function(data){
                   template = data;
                   $('#UnassignedTickets').hide();
+                  $('#assignedTickets').hide();
                   $('div#ticketInfo').html(template);
                   $('#ticketInfo').show();
                   $('.fulleditor').jqte();
                   }
                 });
             });
-            
-           
-        });
-    </script>
-    <script>
-         //Update Ticket
+           //Update Ticket
             $(document).on('click','.updateTicket', function(e){
                 e.preventDefault();
                 console.log("Form Submitted");
@@ -110,11 +136,23 @@
                       'assignee': $('#data_assignee').val(),
                       'requester': $('#data_requester').val()
                     },
-                    success: function(){
-                      $('.tdetails').prepend('<h2 class="alert alert-dismissable alert-success>Ticket Updated</h2>');  
+                    success: function(data){
+                        $('#ticketform').prepend(data.html);
+                        
                     }
                 });
             });
-
+            
+            $('#myticketbutton').click(function(e){
+                e.preventDefault();
+                $('#UnassignedTickets').hide();
+                $('#ticketInfo').hide();
+                $('#assignedTickets').show();
+                $('#ticketupdate').hide();
+            });
+        
+           
+        });
     </script>
+    
 {% endblock %}

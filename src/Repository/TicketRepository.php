@@ -24,14 +24,18 @@ class TicketRepository extends ServiceEntityRepository
         ->where('p.assignee is NULL')
         ->getQuery()
         ->execute();
+     }
+      public function getAssignedTickets($id): array
+    {
         
-        
-//        $sql = '
-//       SELECT * FROM `app_tickets` INNER JOIN app_users ON app_tickets.requester = app_users.id 
-//        ';
-//        
-//        $stmt = $conn->prepare($sql);
-
-       
-    }
+        return $this->createQueryBuilder('p')
+        // p.category refers to the "category" property on product
+        ->innerJoin('p.requester', 'c')
+        // selects all the category data to avoid the query
+        ->addSelect('c')
+        ->where('p.assignee = :id')
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->execute();
+     }
 }

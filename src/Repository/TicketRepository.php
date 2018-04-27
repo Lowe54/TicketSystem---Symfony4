@@ -38,4 +38,17 @@ class TicketRepository extends ServiceEntityRepository
         ->getQuery()
         ->execute();
      }
+     public function getRequestedTickets($id): array
+    {
+        
+        return $this->createQueryBuilder('p')
+        // p.category refers to the "category" property on product
+        ->innerJoin('p.requester', 'c')
+        // selects all the category data to avoid the query
+        ->addSelect('c')
+        ->where('p.requester = :id')
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->execute();
+     }
 }

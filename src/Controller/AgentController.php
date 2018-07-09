@@ -15,18 +15,15 @@ class AgentController extends Controller{
      */
     public function Agent_Dashboard()
     {
-       $usr = $this->getUser();
-       $repository = $this->getDoctrine()->getRepository(User::class);
-       $assignees = $repository->findAll();
-        $id=$usr->getId();
+//       $usr = $this->getUser();
+//       $id=$usr->getId();
         
-        //TODO: Ticket List(s);
        $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
-       $Assigned = $ticketrepository->getAssignedTickets($id);
+//       $Assigned = $ticketrepository->getAssignedTickets($id);
        $Unassigned = $ticketrepository->getUnassignedTickets();
-      dump($Unassigned);
+      
 
-        return $this->render('agent/dashboard.html.twig', array('assigneeList'=> $assignees, 'UTickets' => $Unassigned, 'ATickets' => $Assigned));
+        return $this->render('agent/dashboard.html.twig', array('UTickets' => $Unassigned));
     }
     
     /**
@@ -91,11 +88,21 @@ class AgentController extends Controller{
     $ticket->setAssignee($newassignee);
     $ticket->setRequester($newreq);
     $entityManager->flush();
+   
         $data = '<h2 class="alert alert-success alert-dismissible">Ticket has been updated</h2>';
         $res = new Response(json_encode($data));
        $res->headers->set('Content-Type', 'application/json');
         return new Response($res);
-
     }
+        
+    public function AssignedTicket()
+    {
+       $usr = $this->getUser();
+       $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
+       $id=$usr->getId();
+       $Assigned = $ticketrepository->getAssignedTickets($id);
+       
+      return $this->render('agent/assignedtickettable.html.twig', array('ATickets' => $Assigned));
+    }  
+    
 }
-

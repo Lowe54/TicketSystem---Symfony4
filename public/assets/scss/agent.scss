@@ -1,0 +1,47 @@
+/* 
+    Created on : 24-Apr-2018, 20:58:42
+    Author     : James Lowe
+*/
+@import "bootstrap/bootstrap.scss";
+@import "defaultcolors.scss";
+
+#content{
+    @include make-col(12);
+    @include make-row();
+//SIDEBAR
+#sidebar{
+  @include make-col(2);
+  display:inline-block;
+  
+  ul{
+      list-style-type:none;
+      li{
+      background-color:$sidebar-listitem;
+      padding:5px;
+      border-radius:5px;
+      border: 1px solid grey;
+      a{
+          text-decoration:none;
+          color:white;
+      }
+      &:hover{
+              background-color:darken($sidebar-listitem, 10%);
+          }
+      &.active, &.active:hover{
+      background-color:#155724;    
+      }
+     }
+  }
+ }
+ #UnassignedTickets, #assignedTickets{
+    @include make-col(8);
+    margin-left:25px;
+   }
+   #ticketInfo{
+       @include make-col(8);
+       margin-left: 25px;
+       
+       
+
+   }
+}

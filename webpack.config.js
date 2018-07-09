@@ -10,7 +10,10 @@ Encore
 
     // will create public/build/app.js and public/build/app.css
     .addEntry('agent', './public/assets/js/agent.js')
-    .addStyleEntry('agentstyle', './public/assets/less/agent.less')
+    .addStyleEntry('agentstyle', './public/assets/scss/agent.scss')
+    .addStyleEntry('bootstrap', './public/assets/scss/bootstrap/bootstrap.scss'
+    
+)
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
 
@@ -27,8 +30,8 @@ Encore
     // .enableVersioning()
 
     // allow sass/scss files to be processed
-    // .enableSassLoader()
-    .enableLessLoader()
+    .enableSassLoader()
+    //.enableLessLoader()
 ;
 
 // export the final configuration

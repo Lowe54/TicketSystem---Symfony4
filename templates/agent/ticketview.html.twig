@@ -1,15 +1,13 @@
 {% block ticket %}
 <div id="ticketContainer">
     <form id="ticketform">
-    <span class="tdetails col-8">
+    
+    <span class="tdetails">
         <p>{{id}}</p>
     <input id="data_id" type="hidden" value="{{id}}" name="data_id"/>
     <input type="text" class="form-control" value="{{title}}" name="title" id="data_title"/>
-    <p>{{description}}</p>
-     <textarea class="fulleditor col-4"></textarea>
-    </span>
-    <span class="ticket-rbar col-4">
-        <label for="data_requester"><strong>Submitted by</strong></label>
+    <div class="select-group">
+    <label for="data_requester"><strong>Submitted by</strong></label>
         <select id="data_requester" name="data_requester" class="form-control">
             
             <option value="">Please Select</option>
@@ -21,7 +19,8 @@
                 <option value="{{req.id}}" {{ selected }}>{{req.firstName}} {{req.lastName}}</option>
             {% endfor %}
         </select>
-        
+    </div>
+    <div class="select-group">
         <label for="data_assignee"><strong>Assignee</strong></label>
         <select id="data_assignee" name="data_assignee" class="form-control">
             <option value="">Please Select</option>
@@ -35,11 +34,38 @@
                 <option value="{{user.id}}" {{selected}}>{{user.firstName}} {{user.lastName}}</option>
             {% endfor %}
         </select>
-    <strong>Status: {{status}}</strong>
-    <strong>Priority: {{priority}}</strong>
+        </div>
+     <br/>
+     <fieldset>
+         <div class="select-group">
+             <label for="data_status">Ticket State</label>
+             <select id="data_status" name="data_Status" class="form-control">
+                 <option id="status_new" value="NEW" {%if (status == 'NEW') %}selected{% endif %}>NEW</option>
+                 <option id="status_open" value="OPEN" {%if (status == 'OPEN') %}selected{% endif %}>OPEN</option>
+                 <option id="status_pending" value="PENDING" {%if (status == 'PENDING') %}selected{% endif %}>PENDING</option>
+                 <option id="status_internalhold" value="INTHOLD" {%if (status) == 'INTHOLD' %}selected{% endif %}>INTERNAL HOLD</option>
+                 <option id="status_hold" value="HOLD" {%if (status == 'HOLD') %}selected{% endif %}>ON-HOLD</option>
+                 <option id="status_solved" value="SOLVED" {%if (status == 'SOLVED') %}selected{% endif %}>SOLVED</option>
+                 <option id="status_closed" value="CLOSED" {%if (status == 'CLOSED') %}selected{% endif %}>CLOSED</option>
+             </select>   
+         </div>
+         <div class="select-group">
+             <label for="data_status">Priority</label>
+             <select id="data_priority" name="data_priority" class="form-control">
+                 <option id="priority_low" value="LOW" {%if (priority == 'LOW') %}selected{% endif %}>LOW (40 Working Days)</option>
+                 <option id="priority_normal" value="NORMAL" {%if (priority == 'NORMAL') %}selected{% endif %}>NORMAL (20 Working Days)</option>
+                 <option id="priority_high" value="HIGH" {%if (priority == 'HIGH') %}selected{% endif %}>HIGH (10 Working Days)</option>
+                 <option id="priority_critical" value="CRITICAL" {%if (priority == 'CRITICAL') %}selected{% endif %}>CRITICAL (5 Working Days)</option>
+             </select>   
+         </div>
+     </fieldset>
+         
+    <p>{{description}}</p>
+     <textarea class="fulleditor"></textarea>
+     
     </span>
-    
-    <button type="button" data-ticketid="{{id}}" id="ticketUpdate" value="Update Ticket" class="updateTicket btn btn-primary">Update Ticket</button>
+       
+     
     </form>
 </div>
 {% endblock %}

@@ -4,57 +4,30 @@
     <link rel="stylesheet" href="{{ asset('build/agentstyle.css') }}" type="text/css"/>
 {% endblock %}
 {% block body %}
-    <div id="topDivider">
-        <h2>Welcome {{app.user.firstName}}</h2>
-        </div>
-    <div class="sideBar col-4">
-       <aside class="sidebar_section">
-            <ul>
-                <li><a href="#"><i class="fas fa-home"></i>&nbsp;</i>Home</a></li>
-                <li><a href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
-                {% if app.user.isAdmin %}
-                <li><a href="#">Admin</a></li>
-                {% endif %}
-            </ul>
-        </aside>
-        <aside class="sidebar_section">
-            <h3>Global Views</h3>
-            <ul>
-                <li><a id="UnassignedTicketButton" href="#"><i class="fas fa-home"></i>&nbsp;</i>Unassigned Tickets</a></li>
-            </ul>
-        </aside>
-         <aside class="sidebar_section">
-            <h3>Personal Views</h3>
-            <ul>
-                <li><a id="myticketbutton" href="#"><i class="fas fa-ticket-alt"></i>&nbsp;</i>My Tickets</a></li>
-            </ul>
-        </aside>
-    </div>
-    <div class="content col-8">
+    
+
+<div id="topDivider">
+    <h2>Welcome {{app.user.firstName}}</h2>
+</div>
+<div id="content">
+<nav id="sidebar">
+    <ul class="list-group ">
+         <li class="list-group-item-light"><a href="#"><i class="fas fa-home"></i>&nbsp;</i>Home</a></li>
+         <li class="list-group-item-light"><a href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
+         {% if app.user.isAdmin %}
+         <li class="list-group-item-light"><a href="#">Admin</a></li>
+         {% endif %}
+         <li class="list-group-item-light active"><a id="UnassignedTicketButton" href="#"><i class="fas fa-home"></i>&nbsp;</i>Unassigned Tickets</a></li>
+         <li class="list-group-item-light"><a id="myticketbutton" href="#"><i class="fas fa-ticket-alt"></i>&nbsp;</i>My Tickets</a></li>
+     </ul>
+</nav>
+
 {#    Assigned Tickets    #}
         <div id="assignedTickets">
             <h3>Assigned Tickets</h3>
-            <table class="table">
-                <thead class="thead-dark">
-                <th scope="col">Ticket Id</th>
-                <th scope="col">Requester</th>
-                <th scope="col">Submitted On</th>
-                <th scope="col">Status</th>
-                </thead>
-                <tbody>
-                 {% for ticket in ATickets %}
-                     <tr>
-                        <td>{{ticket.id}}</td>
-                        <td>
-                           {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
-                        </td>
-                        <td>{{ticket.created_on|date('d-m-Y')}}</td>
-                        <td>{{ticket.status}}</td>
-                        <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
-                     </tr>
-                 {% endfor %}
-                </tbody>
-            </table>
+            {% block assignedtickets %}
+                {{ render(controller('App\\Controller\\AgentController::AssignedTicket')) }}
+            {% endblock %}
         </div>
         <div id="UnassignedTickets">
             <h3>Unassigned Tickets</h3>
@@ -80,12 +53,12 @@
                 </tbody>
             </table>
         </div>
-        <div id="ticketInfo" class="col-12">
+        <div id="ticketInfo">
             
             {%block ticket %}{% endblock %}
         </div>
-       </div>
     </div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -95,8 +68,11 @@
             $('#ticketInfo').hide();
             $('#ticketupdate').hide();
             $('#assignedTickets').hide();
+            
             $('#UnassignedTicketButton').click(function(e){
                e.preventDefault();
+               $('#sidebar').find('li.active').removeClass('active');
+                $('#UnassignedTicketButton').closest("li").addClass('active');
                $('#ticketInfo').hide();
                $('#ticketupdate').hide();
                $('#assignedTickets').hide();
@@ -145,9 +121,13 @@
             
             $('#myticketbutton').click(function(e){
                 e.preventDefault();
+                $('#sidebar').find('li.active').removeClass('active');
+                $('#myticketbutton').closest("li").addClass('active');
                 $('#UnassignedTickets').hide();
                 $('#ticketInfo').hide();
+                
                 $('#assignedTickets').show();
+                
                 $('#ticketupdate').hide();
             });
         

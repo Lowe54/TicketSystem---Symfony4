@@ -1,0 +1,23 @@
+{% block assignedtickets %}
+<table class="table">
+<thead class="thead-dark">
+<th scope="col">Ticket Id</th>
+<th scope="col">Requester</th>
+<th scope="col">Submitted On</th>
+<th scope="col">Status</th>
+</thead>
+<tbody>
+ {% for ticket in ATickets %}
+     <tr>
+        <td>{{ticket.id}}</td>
+        <td>
+           {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+        </td>
+        <td>{{ticket.created_on|date('d-m-Y')}}</td>
+        <td>{{ticket.status}}</td>
+        <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+     </tr>
+ {% endfor %}
+</tbody>
+</table>
+{% endblock %}

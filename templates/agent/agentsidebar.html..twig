@@ -1,0 +1,13 @@
+<div id="sidebarWrapper">
+   <nav id="sidebar">
+       <ul class="list-group">
+            <li class="list-group-item-light"><a href="#"><i class="fas fa-home"></i>&nbsp;</i>Home</a></li>
+            <li class="list-group-item-light"><a href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
+            {% if app.user.isAdmin %}
+            <li class="list-group-item-light"><a href="#">Admin</a></li>
+            {% endif %}
+            <li class="list-group-item-light active"><a id="UnassignedTicketButton" href="#"><i class="fas fa-home"></i>&nbsp;</i>Unassigned Tickets</a></li>
+            <li class="list-group-item-light"><a id="myticketbutton" href="#"><i class="fas fa-ticket-alt"></i>&nbsp;</i>My Tickets</a></li>
+        </ul>
+   </nav>
+</div>

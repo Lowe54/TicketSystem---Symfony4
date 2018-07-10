@@ -15,12 +15,9 @@ class AgentController extends Controller{
      */
     public function Agent_Dashboard()
     {
-//       $usr = $this->getUser();
-//       $id=$usr->getId();
-        
-       $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
-//       $Assigned = $ticketrepository->getAssignedTickets($id);
-       $Unassigned = $ticketrepository->getUnassignedTickets();
+        $ticketrepository = $this->getDoctrine()->getRepository(Ticket::class);
+//      $Assigned = $ticketrepository->getAssignedTickets($id);
+        $Unassigned = $ticketrepository->getUnassignedTickets();
       
 
         return $this->render('agent/dashboard.html.twig', array('UTickets' => $Unassigned));
@@ -91,7 +88,7 @@ class AgentController extends Controller{
    
         $data = '<h2 class="alert alert-success alert-dismissible">Ticket has been updated</h2>';
         $res = new Response(json_encode($data));
-       $res->headers->set('Content-Type', 'application/json');
+        $res->headers->set('Content-Type', 'application/json');
         return new Response($res);
     }
         

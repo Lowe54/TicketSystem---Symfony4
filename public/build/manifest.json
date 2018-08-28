@@ -1,5 +1,7 @@
 {
+  "build/jquery.js": "/build/jquery.js",
   "build/bootstrap.css": "/build/bootstrap.css",
   "build/agentstyle.css": "/build/agentstyle.css",
+  "build/d3.js": "/build/d3.js",
   "build/agent.js": "/build/agent.js"
 }

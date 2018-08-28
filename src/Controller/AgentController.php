@@ -100,6 +100,46 @@ class AgentController extends Controller{
        $Assigned = $ticketrepository->getAssignedTickets($id);
        
       return $this->render('agent/assignedtickettable.html.twig', array('ATickets' => $Assigned));
-    }  
+    }
+    
+    /**
+     *@Route("/agent/getReportData", name="fetchreportdata")
+     */
+    public function getReportData(LoggerInterface $logger)
+    {
+        //$reporttype = $reportrequest->request->get('reporttype');
+        $reporttype = 'ticketoverview';
+        switch($reporttype){
+            case 'ticketoverview':
+                  
+                  $status = ["OPEN", "PENDING", "INTHOLD","HOLD","SOLVED","CLOSED"];
+                  $count = array();
+                  $tr = $this->getDoctrine()->getRepository(Ticket::class);
+                  for($i = 0; $i < count($status); $i++)
+                  {
+                     $logger->info("Status is " . $status[$i]);
+                     $s = $tr->findBy(['status' => $status[$i]]);
+                     $c = count($s);
+                   
+                   array_push($count, array('status' => array('name'=>"$status[$i]", 'count'=>$c)));
+                     
+                  }
+                  
+                  
+                  //var_dump($tickets);
+                             
+                  $res = new Response(json_encode($count));
+                $res->headers->set('Content-Type', 'application/json');
+                if($res == null)
+                {
+                $logger->error("RESPONSE IS EMPTY");
+                }
+                return $res;
+                
+            case 'ticketperassignee' :
+                
+                break;
+        }
+    }
     
 }

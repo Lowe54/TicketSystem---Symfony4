@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('build/agentstyle.css') }}" type="text/css"/>
 {% endblock %}
 {% block body %}
-
+    
 
 <div id="topDivider">
     <h2>Welcome {{app.user.firstName}}</h2>
@@ -13,7 +13,7 @@
 <nav id="sidebar">
     <ul class="list-group ">
          <li class="list-group-item-light"><a href="#"><i class="fas fa-home"></i>&nbsp;</i>Home</a></li>
-         <li class="list-group-item-light"><a id="reportingbutton" href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
+         <li class="list-group-item-light"><a href="#"><i class="fas fa-book"></i>&nbsp;</i>Reporting</a></li>
          {% if app.user.isAdmin %}
          <li class="list-group-item-light"><a href="#">Admin</a></li>
          {% endif %}
@@ -54,24 +54,21 @@
             </table>
         </div>
         <div id="ticketInfo">
-
+            
             {%block ticket %}{% endblock %}
         </div>
-
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/jquery-te-1.4.0.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('agent.js')}}" type="text/javascript"></script>
-  
     <script type="text/javascript">
         $(document).ready(function(){
             $('#ticketInfo').hide();
             $('#ticketupdate').hide();
             $('#assignedTickets').hide();
-
+            
             $('#UnassignedTicketButton').click(function(e){
                e.preventDefault();
                $('#sidebar').find('li.active').removeClass('active');
@@ -117,24 +114,25 @@
                     },
                     success: function(data){
                         $('#ticketform').prepend(data.html);
-
+                        
                     }
                 });
             });
-
+            
             $('#myticketbutton').click(function(e){
                 e.preventDefault();
                 $('#sidebar').find('li.active').removeClass('active');
                 $('#myticketbutton').closest("li").addClass('active');
                 $('#UnassignedTickets').hide();
                 $('#ticketInfo').hide();
+                
                 $('#assignedTickets').show();
+                
                 $('#ticketupdate').hide();
             });
-
-
+        
+           
         });
     </script>
-
-
+    
 {% endblock %}

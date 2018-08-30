@@ -20,12 +20,12 @@ class Ticket {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string")
      */
     private $title;
-    
+
     /**
      * @ORM\Column (type="text")
      */
@@ -35,71 +35,71 @@ class Ticket {
      * @ORM\JoinColumn(name="assignee", referencedColumnName="id")
      */
     private $assignee;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="requestedtickets")
      * @ORM\JoinColumn(name="requester", referencedColumnName="id")
      */
     private $requester;
-    
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdOn;
-    
+
     /**
      * @ORM\Column(type="datetime", nullable=TRUE)
      */
     private $updatedOn;
-    
+
      /**
      * @ORM\Column(name="Status", type="string")
      */
     private $status;
-    
+
     /**
      * @ORM\Column(type="string")
      */
     private $priority;
-    
-    
+
+
     //GETTERS
-    
+
     public function getId()
     {
         return $this->id;
     }
-    
+
     public function getTitle()
     {
         return $this->title;
     }
-    
+
     public function getDescription()
     {
         return $this->description;
     }
-    
+
     public function getAssignee()
     {
         return $this->assignee;
     }
-    
+
     public function getRequester()
     {
         return $this->requester;
     }
-    
+
     public function getcreated_on()
     {
         return $this->createdOn;
     }
-    
+
     public function getStatus()
     {
         return $this->status;
     }
-    
+
     public function getupdated_on()
     {
         return $this->updatedOn;
@@ -124,6 +124,13 @@ class Ticket {
     {
         $this->title = $title;
     }
-    
-}
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
 
+}

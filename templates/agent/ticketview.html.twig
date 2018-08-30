@@ -1,7 +1,7 @@
 {% block ticket %}
 <div id="ticketContainer">
     <form id="ticketform">
-    
+
     <span class="tdetails">
         <p>{{id}}</p>
     <input id="data_id" type="hidden" value="{{id}}" name="data_id"/>
@@ -9,7 +9,7 @@
     <div class="select-group">
     <label for="data_requester"><strong>Submitted by</strong></label>
         <select id="data_requester" name="data_requester" class="form-control">
-            
+
             <option value="">Please Select</option>
             {% for req in requester %}
                 {% set selected = '' %}
@@ -47,25 +47,25 @@
                  <option id="status_hold" value="HOLD" {%if (status == 'HOLD') %}selected{% endif %}>ON-HOLD</option>
                  <option id="status_solved" value="SOLVED" {%if (status == 'SOLVED') %}selected{% endif %}>SOLVED</option>
                  <option id="status_closed" value="CLOSED" {%if (status == 'CLOSED') %}selected{% endif %}>CLOSED</option>
-             </select>   
+             </select>
          </div>
          <div class="select-group">
-             <label for="data_status">Priority</label>
+             <label for="data_priority">Priority</label>
              <select id="data_priority" name="data_priority" class="form-control">
                  <option id="priority_low" value="LOW" {%if (priority == 'LOW') %}selected{% endif %}>LOW (40 Working Days)</option>
                  <option id="priority_normal" value="NORMAL" {%if (priority == 'NORMAL') %}selected{% endif %}>NORMAL (20 Working Days)</option>
                  <option id="priority_high" value="HIGH" {%if (priority == 'HIGH') %}selected{% endif %}>HIGH (10 Working Days)</option>
                  <option id="priority_critical" value="CRITICAL" {%if (priority == 'CRITICAL') %}selected{% endif %}>CRITICAL (5 Working Days)</option>
-             </select>   
+             </select>
          </div>
      </fieldset>
-         
+
     <p>{{description}}</p>
      <textarea class="fulleditor"></textarea>
-     
+
     </span>
-       
-     
+       <p class="updateTicket btn btn-success">Update Ticket</p>
+
     </form>
 </div>
 {% endblock %}

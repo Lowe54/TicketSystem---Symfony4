@@ -1,10 +1,10 @@
-/* 
+/*
     Created on : 24-Apr-2018, 20:58:42
     Author     : James Lowe
 */
 @import "bootstrap/bootstrap.scss";
 @import "defaultcolors.scss";
-
+//CONTENT
 #content{
     @include make-col(12);
     @include make-row();
@@ -12,36 +12,98 @@
 #sidebar{
   @include make-col(2);
   display:inline-block;
-  
+  height:100%;
   ul{
       list-style-type:none;
-      li{
-      background-color:$sidebar-listitem;
-      padding:5px;
-      border-radius:5px;
-      border: 1px solid grey;
       a{
           text-decoration:none;
           color:white;
+          li{
+          background-color:$sidebar-listitem;
+          padding:5px;
+          border-radius:5px;
+          border: 1px solid grey;
+        }
       }
       &:hover{
               background-color:darken($sidebar-listitem, 10%);
           }
       &.active, &.active:hover{
-      background-color:#155724;    
+      background-color:#155724;
       }
-     }
+
   }
  }
- #UnassignedTickets, #assignedTickets{
-    @include make-col(8);
-    margin-left:25px;
-   }
+//ASSIGNED Tickets
+#assignedTickets{
+#assignedTabContent{
+  @include make-col(9);
+}
+.nav-item{
+  a{
+    color:white;
+    font-weight:bold;
+    text-decoration: none;
+    &.active{
+      color:black;
+    }
+  }
+  &.open{
+    background-image: radial-gradient(red, white);
+  }
+  &.pending{
+    background-image: radial-gradient(blue, white);
+  }
+  &.onhold{
+    background-image: radial-gradient(black, darkgray);
+    color:white;
+  }
+  &.inthold{
+    background-image: radial-gradient(orange, white);
+  }
+  &.solved{
+    background-image: radial-gradient(darkgray, black);
+  }
+
+}
+}
+
+//TICKET VIEW
    #ticketInfo{
        @include make-col(8);
        margin-left: 25px;
-       
-       
+   }
+//ADMIN VIEWS
+   #AdminTable{
+     @include make-col(9);
+     .nav-item{
+       @include make-col(6);
+     }
+     table{
+       border: 1px solid;
+       border:collapse;
+     }
+     table th{
+       text-align: center;
+     }
+     table td{
+       border-left: 1px #000;
+       &.active{background-image: radial-gradient(green, lightgreen, white);}
+       &.inactive{background-image: radial-gradient(red, red, white);}
+       text-align: center;
+       font-weight: bold;
 
+      p{
+       //background-image: radial-gradient(green, lightgreen, white);
+       color:white;
+       font-weight:bold;
+       border-radius:3px;
+     }
+    }
+   }
+   .dl-horizontal{
+     dd{
+       display:inline-block;
+     }
    }
 }

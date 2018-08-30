@@ -1,23 +1,142 @@
 {% block assignedtickets %}
-<table class="table">
-<thead class="thead-dark">
-<th scope="col">Ticket Id</th>
-<th scope="col">Requester</th>
-<th scope="col">Submitted On</th>
-<th scope="col">Status</th>
-</thead>
-<tbody>
- {% for ticket in ATickets %}
-     <tr>
-        <td>{{ticket.id}}</td>
-        <td>
-           {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
-        </td>
-        <td>{{ticket.created_on|date('d-m-Y')}}</td>
-        <td>{{ticket.status}}</td>
-        <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
-     </tr>
- {% endfor %}
-</tbody>
-</table>
+<ul class="nav nav-tabs" id="assigned_Tab" role="tablist">
+  <li class="nav-item open">
+    <a class="nav-link active" id="open-tab" data-toggle="tab" href="#opentable" role="tab" aria-controls="opentickets" aria-selected="true"><h2>OPEN</h2></a>
+  </li>
+  <li class="nav-item pending">
+    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pendingtable" role="tab" aria-controls="pendingtickets" aria-selected="false"><h2>PENDING</h2></a>
+  </li>
+  <li class="nav-item onhold">
+    <a class="nav-link" id="onhold-tab" data-toggle="tab" href="#holdtable" role="tab" aria-controls="onholdtickets" aria-selected="false"><h2>ON-HOLD</h2></a>
+  </li>
+  <li class="nav-item inthold">
+    <a class="nav-link" id="inthold-tab" data-toggle="tab" href="#intholdtable" role="tab" aria-controls="intholdtickets" aria-selected="false"><h2>INTERNAL ON-HOLD</h2></a>
+  </li>
+  <li class="nav-item solved">
+    <a class="nav-link" id="solved-tab" data-toggle="tab" href="#solvedtable" role="tab" aria-controls="solvedtickets" aria-selected="false"><h2>SOLVED</h2></a>
+  </li>
+</ul>
+<div class="tab-content" id="assignedTabContent">
+  <div id="opentable" class="tab-pane fade show active" role="tabpanel" aria-labelledby="open-tab">
+    <table class="table">
+    <thead class="thead-dark">
+    <th scope="col">Ticket Id</th>
+    <th scope="col">Requester</th>
+    <th scope="col">Submitted On</th>
+    </thead>
+    <tbody>
+     {% for ticket in ATickets %}
+      {% if ticket.status == 'OPEN' %}
+         <tr>
+            <td>{{ticket.id}}</td>
+            <td>
+               {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+            </td>
+            <td>{{ticket.created_on|date('d-m-Y')}}</td>
+            <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+         </tr>
+      {% endif %}
+     {% endfor %}
+    </tbody>
+    </table>
+  </div>
+  <!-- PENDING -->
+  <div id="pendingtable" class="tab-pane fade" role="tabpanel" aria-labelledby="pending-tab">
+    <table class="table">
+    <thead class="thead-dark">
+    <th scope="col">Ticket Id</th>
+    <th scope="col">Requester</th>
+    <th scope="col">Submitted On</th>
+    </thead>
+    <tbody>
+     {% for ticket in ATickets %}
+      {% if ticket.status == 'PENDING' %}
+         <tr>
+            <td>{{ticket.id}}</td>
+            <td>
+               {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+            </td>
+            <td>{{ticket.created_on|date('d-m-Y')}}</td>
+            <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+         </tr>
+      {% endif %}
+     {% endfor %}
+    </tbody>
+    </table>
+  </div>
+  <!-- ONHOLD -->
+  <div id="holdtable" class="tab-pane fade" role="tabpanel" aria-labelledby="onhold-tab">
+    <table class="table">
+    <thead class="thead-dark">
+    <th scope="col">Ticket Id</th>
+    <th scope="col">Requester</th>
+    <th scope="col">Submitted On</th>
+    </thead>
+    <tbody>
+     {% for ticket in ATickets %}
+      {% if ticket.status == 'HOLD' %}
+         <tr>
+            <td>{{ticket.id}}</td>
+            <td>
+               {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+            </td>
+            <td>{{ticket.created_on|date('d-m-Y')}}</td>
+            <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+         </tr>
+      {% endif %}
+     {% endfor %}
+    </tbody>
+    </table>
+  </div>
+  <!-- INTERNAL HOLD -->
+  <div id="intholdtable" class="tab-pane fade" role="tabpanel" aria-labelledby="inthold-tab">
+    <table class="table">
+    <thead class="thead-dark">
+    <th scope="col">Ticket Id</th>
+    <th scope="col">Requester</th>
+    <th scope="col">Submitted On</th>
+    </thead>
+    <tbody>
+     {% for ticket in ATickets %}
+      {% if ticket.status == 'INTHOLD' %}
+         <tr>
+            <td>{{ticket.id}}</td>
+            <td>
+               {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+            </td>
+            <td>{{ticket.created_on|date('d-m-Y')}}</td>
+            <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+         </tr>
+      {% endif %}
+     {% endfor %}
+    </tbody>
+    </table>
+  </div>
+  <!-- SOLVED -->
+  <div id="solvedtable" class="tab-pane fade" role="tabpanel" aria-labelledby="solved-tab">
+    <table class="table">
+    <thead class="thead-dark">
+    <th scope="col">Ticket Id</th>
+    <th scope="col">Requester</th>
+    <th scope="col">Submitted On</th>
+    </thead>
+    <tbody>
+     {% for ticket in ATickets %}
+      {% if ticket.status == 'SOLVED' %}
+         <tr>
+            <td>{{ticket.id}}</td>
+            <td>
+               {{ ticket.requester.firstName }}&nbsp;{{ticket.requester.lastName}}
+            </td>
+            <td>{{ticket.created_on|date('d-m-Y')}}</td>
+            <td><a data-ticketid="{{ticket.id}}" class="btn btn-info viewticket" href="#">View</a></td>
+         </tr>
+      {% endif %}
+     {% endfor %}
+    </tbody>
+    </table>
+  </div>
+</div>
+
+
 {% endblock %}

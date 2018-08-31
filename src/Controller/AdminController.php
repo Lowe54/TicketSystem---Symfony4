@@ -41,6 +41,16 @@ class AdminController extends Controller{
     }
     return $res;
   }
+  /**
+  *@Route("/admin/deleteuser", name="deleteUser)
+  */
+  public function deleteUser(Request $request)
+  {
+   $id = $request->request->get('id');
+   $repository = $this->getDoctrine()->getRepository(User::class');
+   $u = $repository->findOneBy(array('id' => $id);
+   
+  }
 }
 
 ?>

@@ -27,7 +27,7 @@ class Ticket {
     private $title;
 
     /**
-     * @ORM\Column (type="text")
+     ** @ORM\Column(type="integer", name="ticketrequestid")
      */
     private $description;
     /**

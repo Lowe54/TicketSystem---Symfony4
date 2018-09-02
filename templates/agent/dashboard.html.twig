@@ -115,7 +115,7 @@
                   }
                 });
             });
-           //Update Ticket
+            //Update Ticket
             $(document).on('click','.updateTicket', function(e){
                 e.preventDefault();
                 console.log("Form Submitted");
@@ -130,7 +130,10 @@
                       'assignee': $('#data_assignee').val(),
                       'requester': $('#data_requester').val(),
                       'status': $('#data_status').val(),
-                      'priority' : $('#data_priority').val()
+                      'priority' : $('#data_priority').val(),
+                      'reply': $('.jqte_editor').html(),
+                      'replytype' : $('#reply_responsetype').val(),
+                      'userId': '{{app.user.id}}'
                     },
                     success: function(data){
                         $('#ticketform').prepend(data.html);
@@ -138,7 +141,18 @@
                     }
                 });
             });
-
+          $(document).on('click','#internal-response',function(e){
+              e.preventDefault();
+              console.log("Internal BTN Clicked");
+              $(this).parent('span').parent('div').find('.jqte_editor').css('background', '#98fb98');
+              $('#reply_responsetype').val('INTERNAL');
+            });
+            $(document).on('click','#public-response',function(e){
+              e.preventDefault();
+              console.log("Public BTN Clicked");
+              $(this).parent('span').parent('div').find('.jqte_editor').css('background-color', '#FFF');
+              $('#reply_responsetype').val('PUBLIC');
+            });
             $('#myticketbutton').click(function(e){
                 e.preventDefault();
                 $('#sidebar').find('li.active').removeClass('active');
@@ -168,10 +182,11 @@
                     }
                 });
                 });
+                //Response type settings
+
+              });
 
 
-
-        });
     </script>
 
 {% endblock %}

@@ -59,12 +59,23 @@
              </select>
          </div>
      </fieldset>
+    <div id="replybox">
+      <span class="responsetype">
+        <p id="internal-response" class="btn">Internal</p>
+        <p id="public-response" class="btn">Public</p>
+      </span>
+      <span class="fulleditor"></span>
+    </div>
+    {% for r in messagehistory|reverse %}
+      <div class="reply reply-{{r.reply_type|lower}}">
+        <p class="reply_info">{{ r.requester.firstName }}&nbsp;{{r.requester.lastName}} replied on {{r.replydate|date('d-m-Y')}}<p>
 
-    <p>{{description}}</p>
-     <textarea class="fulleditor"></textarea>
+            {{r.content|striptags('<div><a>')|raw }}
 
-    </span>
-       <p class="updateTicket btn btn-success">Update Ticket</p>
+      </div>
+    {% endfor %}
+    <input id="reply_responsetype" type="hidden" value="PUBLIC">
+    <p class="updateTicket btn btn-success">Update Ticket</p>
 
     </form>
 </div>

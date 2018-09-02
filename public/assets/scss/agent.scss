@@ -72,6 +72,52 @@
    #ticketInfo{
        @include make-col(8);
        margin-left: 25px;
+       span.responsetype{
+         padding-left: 0px;
+         padding-top: 20px;
+         padding-bottom: 0px;
+         list-style-type: none;
+         display:block;
+         p{
+           display:inline-block;
+           &#internal-response{
+             background-color: lightgreen;
+           }
+           &#public-response{
+             background-color: darken(#FFF, 5%);
+           }
+         }
+       }
+       //JQTE OVERRIDE
+       .jqte{
+         margin-top:0;
+       }
+       .reply{
+         .content{
+           padding-left:10px;
+         }
+         width:100%;
+         height:150px;
+         border-left:1px solid black;
+         border-right:1px solid black;
+         border-bottom:1px solid black;
+         border-radius:15px;
+      p.reply_info{
+        margin-top:5px;
+        padding-left:10px;
+        border-top:1px solid black;
+        border-top-left-radius:15px;
+        border-top-right-radius:15px;
+        border-bottom: 1px solid black;
+        background-color: lighten(grey, 10%);
+      }
+       &.reply-public{
+
+       }
+       &.reply-internal{
+         background-color:lightgreen;
+       }
+     }
    }
 //ADMIN VIEWS
    #AdminTable{
